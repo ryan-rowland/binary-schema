@@ -1,0 +1,21 @@
+{
+  "name": "json-packet",
+  "version": "0.1.0",
+  "description": "Blazing fast two-way serialization between JSON and binary packets using a shared JSON template.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha --reporter=spec ./test/index.js"
+  },
+  "keywords": [
+    "binary",
+    "json",
+    "packet",
+    "serialize"
+  ],
+  "author": "Ryan Rowland <ryan.w.rowland@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "3.9.1",
+    "mocha": "2.4.5"
+  }
+}
