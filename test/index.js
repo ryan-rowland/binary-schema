@@ -4,7 +4,7 @@ const assert = require('assert');
 const JsonPacket = require('../lib');
 
 describe('.string', function() {
-  it('should correctly pack and unpack a single string', () => {
+  it('should correctly pack and unpack a string', () => {
     const packet = new JsonPacket({
       foo: 'string'
     });
@@ -14,6 +14,34 @@ describe('.string', function() {
     const unpacked = packet.unpack(packed);
 
     assert.deepEqual(packed, new Buffer([0x00, 0x03, 0x62, 0x61, 0x72]));
+    assert.deepEqual(unpacked, data);
+  });
+
+  it('should correctly pack and unpack a string with extended characters', () => {
+    const packet = new JsonPacket({
+      foo: 'string'
+    });
+    const data = { foo: '\u0012\ubeef' };
+
+    const packed = packet.pack(data);
+    const unpacked = packet.unpack(packed);
+
+    assert.deepEqual(packed, new Buffer([0x00, 0x04, 0x12, 0xeb, 0xbb, 0xaf]));
+    assert.deepEqual(unpacked, data);
+  });
+});
+
+describe('.hex', function() {
+  it('should correctly pack and unpack a hex string', () => {
+    const packet = new JsonPacket({
+      foo: 'hex'
+    });
+    const data = { foo: 'deadbeef' };
+
+    const packed = packet.pack(data);
+    const unpacked = packet.unpack(packed);
+
+    assert.deepEqual(packed, new Buffer([0x00, 0x04, 0xde, 0xad, 0xbe, 0xef]));
     assert.deepEqual(unpacked, data);
   });
 });
