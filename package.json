@@ -1,9 +1,9 @@
 {
-  "name": "json-packet",
+  "name": "binary-schema",
   "version": "0.1.1",
-  "description": "Blazing fast two-way serialization between JSON and binary packets using a shared JSON template.",
+  "description": "Blazing fast two-way serialization between JSON and binary.",
   "main": "lib/index.js",
-  "repository": "https://github.com/ryan-rowland/json-packet",
+  "repository": "https://github.com/ryan-rowland/binary-schema",
   "scripts": {
     "test": "mocha --reporter=spec ./test/index.js",
     "benchmark": "node ./benchmark/index.js"
@@ -11,7 +11,7 @@
   "keywords": [
     "binary",
     "json",
-    "packet",
+    "template",
     "serialize"
   ],
   "author": "Ryan Rowland <ryan.w.rowland@gmail.com>",

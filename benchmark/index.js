@@ -3,7 +3,7 @@
 const SAMPLE_COUNT = 500000;
 
 const colors = require('colors/safe');
-const JsonPacket = require('../lib');
+const BinarySchema = require('../lib');
 const Graph = require('./graph');
 
 (function () {
@@ -24,10 +24,10 @@ const Graph = require('./graph');
     'string', 'int8', 'uint8', 'int16', 'uint16',
     'int32', 'uint32', 'float', 'double'];
 
-  const packSpeeds = { name: 'JsonPacket.pack', data: [] };
+  const packSpeeds = { name: 'BinarySchema.pack', data: [] };
   const stringifySpeeds = { name: 'JSON.stringify', data: [] };
 
-  const unpackSpeeds = { name: 'JsonPacket.unpack', data: [] };
+  const unpackSpeeds = { name: 'BinarySchema.unpack', data: [] };
   const parseSpeeds = { name: 'JSON.parse', data: [] };
 
   results.forEach(result => {
@@ -73,7 +73,7 @@ function runSingleBenchmark(type, value) {
 }
 
 function runBenchmark(template, data) {
-  const packet = new JsonPacket(template);
+  const packet = new BinarySchema(template);
 
   const packStart = Date.now();
   for (let i = 0; i < SAMPLE_COUNT; i++) {
