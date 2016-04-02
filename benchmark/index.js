@@ -21,8 +21,8 @@ const Graph = require('./graph');
   ];
 
   const labels = [
-    'string', 'int8', 'uint8', 'int16', 'uint16',
-    'int32', 'uint32', 'float', 'double'];
+    'int8', 'uint8', 'int16', 'uint16', 'int32',
+    'uint32', 'float', 'double', 'string', 'hex'];
 
   const packSpeeds = { name: 'BinarySchema.pack', data: [] };
   const stringifySpeeds = { name: 'JSON.stringify', data: [] };
