@@ -1,3 +1,5 @@
+'use strict';
+
 const assert = require('assert');
 const JsonPacket = require('../lib');
 
@@ -11,25 +13,8 @@ describe('.string', function() {
     const packed = packet.pack(data);
     const unpacked = packet.unpack(packed);
 
-    assert.deepEqual(packed, new Buffer([0x62, 0x61, 0x72, 0x00]));
+    assert.deepEqual(packed, new Buffer([0x00, 0x03, 0x62, 0x61, 0x72]));
     assert.deepEqual(unpacked, data);
-  });
-
-  it('should correctly pack and unpack multiple strings', () => {
-    const packet = new JsonPacket({
-      foo: 'string',
-      baz: 'string'
-    });
-    const data = { foo: 'bar', baz: 'qux' };
-
-    const packed = packet.pack(data);
-    const unpacked = packet.unpack(packed);
-
-    assert.deepEqual(unpacked, data);
-    assert.deepEqual(packed, new Buffer([
-      0x71, 0x75, 0x78, 0x00,
-      0x62, 0x61, 0x72, 0x00
-    ]));
   });
 });
 
@@ -178,8 +163,8 @@ describe('primitives', function() {
       0x01, 0x85, 0xf2, 0x63,
       0x41, 0x32, 0xd6, 0x87,
       0xe4, 0x27, 0xa6, 0x37,
-      0x62, 0x61, 0x72, 0x00,
-      0x71, 0x75, 0x78, 0x00
+      0x00, 0x03, 0x62, 0x61, 0x72,
+      0x00, 0x03, 0x71, 0x75, 0x78
     ]));
   });
 });
