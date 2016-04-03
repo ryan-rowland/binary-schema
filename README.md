@@ -52,6 +52,27 @@ socket.on('data', (message) => {
 })
 ```
 
+# API
+
+```js
+class BinarySchema {
+  constructor(template) {
+    // Compiles pack and unpack methods from the template.
+  }
+
+  pack(json, offset) {
+    // Returns a new buffer containing the packed json.
+    // If offset is specified, [offset] number of undesignated bytes will
+    // precede the packed json (extending the length of the buffer).
+  }
+
+  unpack(buffer, offset) {
+    // Returns the json unpacked from the passed buffer.
+    // If offset is specified, unpack will begin reading from that offset.
+  }
+}
+```
+
 # Benchmarks
 
 ###pack
