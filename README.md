@@ -35,6 +35,23 @@ const json = characterSchema.unpack(binary);
 // JSON.stringify(json).length === 47
 ```
 
+# Unpacking from an offset
+If you're interpreting packets, it may be useful to start reading from
+an offset. For instance, the first byte may contain a UInt8 representing the
+type of packet you're receiving.
+
+```js
+const schemas = {
+  0x01: new BinarySchema({ direction: 'uint8' }), // Move
+  0x02: new BinarySchema({ enemyId: 'hex' })      // Attack
+};
+
+socket.on('data', (message) => {
+  const commandId = message.readUInt8(0);
+  const body = schemas[commandId](message, 1);
+})
+```
+
 # Benchmarks
 
 ###pack

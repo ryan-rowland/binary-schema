@@ -3,7 +3,25 @@
 const assert = require('assert');
 const BinarySchema = require('../lib');
 
-describe('.string', function() {
+describe('offset parameter', function() {
+  it('should be obeyed for pack and unpack', () => {
+    const schema = new BinarySchema({
+      foo: 'int16'
+    });
+
+    const packed = schema.pack({ foo: -12345 }, 2);
+    packed.writeInt16BE(789, 0);
+
+    const unpacked1 = schema.unpack(packed);
+    const unpacked2 = schema.unpack(packed, 2);
+
+    assert.deepEqual(packed, new Buffer([0x03, 0x15, 0xcf, 0xc7]));
+    assert.deepEqual(unpacked1, { foo: 789 });
+    assert.deepEqual(unpacked2, { foo: -12345 });
+  })
+});
+
+describe('string', function() {
   it('should correctly pack and unpack a string', () => {
     const schema = new BinarySchema({
       foo: 'string'
@@ -31,7 +49,7 @@ describe('.string', function() {
   });
 });
 
-describe('.hex', function() {
+describe('hex', function() {
   it('should correctly pack and unpack a hex string', () => {
     const schema = new BinarySchema({
       foo: 'hex'
