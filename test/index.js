@@ -35,9 +35,22 @@ describe('string', function() {
     assert.deepEqual(unpacked, data);
   });
 
-  it('should correctly pack and unpack a string with extended characters', () => {
+  it('should correctly pack and unpack an ascii string', () => {
     const schema = new BinarySchema({
-      foo: 'string'
+      foo: 'ascii'
+    });
+    const data = { foo: 'bar' };
+
+    const packed = schema.pack(data);
+    const unpacked = schema.unpack(packed);
+
+    assert.deepEqual(packed, new Buffer([0x00, 0x03, 0x62, 0x61, 0x72]));
+    assert.deepEqual(unpacked, data);
+  });
+
+  it('should correctly pack and unpack a utf8 string with extended characters', () => {
+    const schema = new BinarySchema({
+      foo: 'utf8'
     });
     const data = { foo: '\u0012\ubeef' };
 
@@ -45,21 +58,6 @@ describe('string', function() {
     const unpacked = schema.unpack(packed);
 
     assert.deepEqual(packed, new Buffer([0x00, 0x04, 0x12, 0xeb, 0xbb, 0xaf]));
-    assert.deepEqual(unpacked, data);
-  });
-});
-
-describe('hex', function() {
-  it('should correctly pack and unpack a hex string', () => {
-    const schema = new BinarySchema({
-      foo: 'hex'
-    });
-    const data = { foo: 'deadbeef' };
-
-    const packed = schema.pack(data);
-    const unpacked = schema.unpack(packed);
-
-    assert.deepEqual(packed, new Buffer([0x00, 0x04, 0xde, 0xad, 0xbe, 0xef]));
     assert.deepEqual(unpacked, data);
   });
 });

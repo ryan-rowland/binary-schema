@@ -7,6 +7,7 @@ const BinarySchema = require('../lib');
 const Graph = require('./graph');
 
 (function () {
+  const sampleString = new Array(501).join('a');
   const results = [
     runSingleBenchmark('int8', -12),
     runSingleBenchmark('uint8', 255),
@@ -16,13 +17,13 @@ const Graph = require('./graph');
     runSingleBenchmark('uint32', 25555555),
     runSingleBenchmark('float', -12345),
     runSingleBenchmark('double', 1234567.89123),
-    runSingleBenchmark('string', 'qux'),
-    runSingleBenchmark('hex', 'deadbeef')
+    runSingleBenchmark('utf8', sampleString),
+    runSingleBenchmark('ascii', sampleString)
   ];
 
   const labels = [
     'int8', 'uint8', 'int16', 'uint16', 'int32',
-    'uint32', 'float', 'double', 'string', 'hex'];
+    'uint32', 'float', 'double', 'utf8', 'ascii'];
 
   const packSpeeds = { name: 'BinarySchema.pack', data: [] };
   const stringifySpeeds = { name: 'JSON.stringify', data: [] };
@@ -37,8 +38,8 @@ const Graph = require('./graph');
     parseSpeeds.data.push(result.parseRate);
   });
 
-  //console.info(Graph.getUrl(labels, stringifySpeeds, packSpeeds));
-  //console.info(Graph.getUrl(labels, parseSpeeds, unpackSpeeds));
+  console.info(Graph.getUrl(labels, stringifySpeeds, packSpeeds));
+  console.info(Graph.getUrl(labels, parseSpeeds, unpackSpeeds));
 
   /*console.info('All Primitives');
   runBenchmark({
