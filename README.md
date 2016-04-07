@@ -9,26 +9,28 @@ int16, uint16, int32, uint32, float, double]**
 
 Planned to support: **[array, object, boolean, number]**
 
+Values can be denoted as nullable by appending a question mark: `{ title: 'ascii?' }`
 # Example Usage
 ```js
 import BinarySchema from 'binary-schema';
 
 const characterSchema = new BinarySchema({
   name: 'ascii',
+  title: 'ascii?',
   race: 'uint8',
   class: 'uint8',
   maxHp: 'uint32'
 });
 
 const binary = characterSchema.pack({
-  name: 'ascii',
+  name: 'osom',
   race: 3,
   class: 7,
   maxHp: 3500
 });
 
-// binary === <Buffer 07 00 00 0d ac 00 04 6f 73 6f 6d 03>
-// binary.length === 12
+// binary === <Buffer 07 00 00 0d ac 00 04 6f 73 6f 6d 03 00>
+// binary.length === 13
 
 const json = characterSchema.unpack(binary);
 

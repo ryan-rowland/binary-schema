@@ -170,17 +170,59 @@ describe('primitives', function() {
     ]));
   });
 
+  it('should correctly pack and unpack a nullable double (null)', () => {
+    const schema = new BinarySchema({
+      foo: 'double?'
+    });
+    const data = { foo: null };
+
+    const packed = schema.pack(data);
+    const unpacked = schema.unpack(packed);
+
+    assert.deepEqual(unpacked, data);
+    assert.deepEqual(packed, new Buffer([ 0x00 ]));
+  });
+
+  it('should correctly pack and unpack a nullable double (undefined)', () => {
+    const schema = new BinarySchema({
+      foo: 'double?'
+    });
+    const data = { };
+
+    const packed = schema.pack(data);
+    const unpacked = schema.unpack(packed);
+
+    assert.deepEqual(unpacked, { foo: null });
+    assert.deepEqual(packed, new Buffer([ 0x00 ]));
+  });
+
+  it('should correctly pack and unpack a nullable double (not null)', () => {
+    const schema = new BinarySchema({
+      foo: 'double?'
+    });
+    const data = { foo: 1234567.89123 };
+
+    const packed = schema.pack(data);
+    const unpacked = schema.unpack(packed);
+
+    assert.deepEqual(unpacked, data);
+    assert.deepEqual(packed, new Buffer([ 0x01,
+      0x41, 0x32, 0xd6, 0x87,
+      0xe4, 0x27, 0xa6, 0x37
+    ]));
+  });
+
   it('should correctly pack and unpack a big template', () => {
     const schema = new BinarySchema({
       7: 'double',
-      6: 'uint32',
+      6: 'uint32?',
       5: 'int32',
-      4: 'uint16',
+      4: 'uint16?',
       3: 'int16',
       2: 'uint8',
-      1: 'int8',
-      8: 'string',
-      9: 'string'
+      1: 'int8?',
+      8: 'string?',
+      9: 'ascii'
     });
     const data = {
       1: -12,
@@ -190,7 +232,7 @@ describe('primitives', function() {
       6: 25555555,
       4: 25555,
       7: 1234567.89123,
-      8: 'bar',
+      8: null,
       9: 'qux'
     };
 
@@ -199,15 +241,15 @@ describe('primitives', function() {
 
     assert.deepEqual(unpacked, data);
     assert.deepEqual(packed, new Buffer([
-      0xf4,
+      0x01, 0xf4,
       0xff,
       0xd1, 0x20,
-      0x63, 0xd3,
+      0x01, 0x63, 0xd3,
       0xff, 0x48, 0xe5, 0x00,
-      0x01, 0x85, 0xf2, 0x63,
+      0x01, 0x01, 0x85, 0xf2, 0x63,
       0x41, 0x32, 0xd6, 0x87,
       0xe4, 0x27, 0xa6, 0x37,
-      0x00, 0x03, 0x62, 0x61, 0x72,
+      0x00,
       0x00, 0x03, 0x71, 0x75, 0x78
     ]));
   });

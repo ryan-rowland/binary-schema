@@ -21,6 +21,8 @@ const Graph = require('./graph');
     runSingleBenchmark('ascii', sampleString)
   ];
 
+  runSingleBenchmark('double?', 1234567.89123),
+
   const labels = [
     'int8', 'uint8', 'int16', 'uint16', 'int32',
     'uint32', 'float', 'double', 'utf8', 'ascii'];
